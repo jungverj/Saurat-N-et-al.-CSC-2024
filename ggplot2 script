@@ -1,0 +1,26 @@
+#libraries
+library(ggplot2)
+
+#file location
+setwd("~/Documents/screenPaper")
+
+#import staring docs
+##betascores with Day20 control-outliersremoved
+betaScores20_O <- read.table("betaScores20_O.txt", header = T)
+##hit genes 
+candidateGenes20_O <- read.table("candidateGenes20_O.txt", header = T)
+##essential genes
+essentialGenes20 <- read.table("essentialGenes20.txt", header = T)
+##proliferation/survivalgenes
+proliferationGenes20 <- read.table("proliferationGenes20.txt", header = T)
+
+
+#D20 scatter plot without outliers
+scatter20_O <- ggplot() + geom_point(data = betaScores20_O, aes(x = dox_beta_C, y=dox_beta_AD, color = "Gene"), color = "lightgrey") + 
+  geom_point(data = candidateGenes20_O, aes(x = dox_beta_C, y=dox_beta_AD), color = "deepskyblue4") + 
+  geom_point(data = essentialGenes20, aes(x = dox_beta_C, y=dox_beta_AD),color = "darkolivegreen") + 
+  geom_point(data = proliferationGenes20, aes(x = dox_beta_C, y=dox_beta_AD), color = "darkgoldenrod3" )+
+  theme_bw() + theme(legend.title = element_blank()) + theme(legend.title = element_blank()) + xlab("WT Beta Score") + ylab("AD Beta Score") + 
+  theme (text = element_text(size=30), axis.text.x = element_text(angle=90, hjust=1))+ xlim(-2,2)
+plot(scatter20_O)
+ggsave("scatter20_O.tiff",dpi=300)
